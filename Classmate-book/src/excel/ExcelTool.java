@@ -1,15 +1,9 @@
 package excel;
 
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -17,7 +11,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 public class ExcelTool {
-	public void outExcel() {
+	public void outExcel(List<users> ls) {
 		HSSFWorkbook wb = null;
 		String sheetName = "校友录";
 		String []title = new String[10];
@@ -31,8 +25,6 @@ public class ExcelTool {
 		title[7]="个性语言";
 		title[8]="职务";
 		title[9]="班级";
-		String [][]values = new String[1][1];
-		values[0][0]="1";
 		// 第一步，创建一个HSSFWorkbook，对应一个Excel文件
         if(wb == null){
             wb = new HSSFWorkbook();
@@ -59,12 +51,24 @@ public class ExcelTool {
         }
 
         //创建内容
-        for(int i=0;i<values.length;i++){
+        for(int i=0;i<ls.size();i++){
             row = sheet.createRow(i + 1);
-            for(int j=0;j<values[i].length;j++){
+            
+            //for(int j=0;j<values[i].length;j++){
                 //将内容按顺序赋给对应的列对象
-                row.createCell(j).setCellValue(values[i][j]);
-            }
+                //row.createCell(j).setCellValue(values[i][j]);
+            //}
+            int j=0;
+            row.createCell(j++).setCellValue(ls.get(i).getUsno());
+            row.createCell(j++).setCellValue(ls.get(i).getUsname());
+            row.createCell(j++).setCellValue(ls.get(i).getUsaddress());
+            row.createCell(j++).setCellValue(ls.get(i).getUstele());
+            row.createCell(j++).setCellValue(ls.get(i).getUsweixin());
+            row.createCell(j++).setCellValue(ls.get(i).getUsyouxiangadd());
+            row.createCell(j++).setCellValue(ls.get(i).getUsqq());
+            row.createCell(j++).setCellValue(ls.get(i).getUsdiy());
+            row.createCell(j++).setCellValue(ls.get(i).getUspost());
+            row.createCell(j++).setCellValue(ls.get(i).getUcname());
         }
         File file=new File("校友录.xls");
         try { file.createNewFile();
